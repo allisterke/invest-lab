@@ -19,5 +19,5 @@ fi
 
 while read -r LINE; do
   echo "$LINE" | \
-    sed -r 's/('$KEY')/<span style="color:'$COLOR'; font:italic bolder xx-large; background:'$BG';">\1<\/span>/g'
+    sed -r 's/('$KEY')/<span style="color:'$COLOR'; font-style:italic; font-weight:bolder; font-size:xx-large; background:'$BG';">\1<\/span>/g'
 done
