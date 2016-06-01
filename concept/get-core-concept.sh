@@ -60,11 +60,12 @@ ln -s -f $DIR concept
 while read CODE; do
   echo "$CODE"
 
-  CONCEPT=$(core_concept $CODE | tr '\r\n' ' ' | sed 's/<[^>]*>/ /g' | sed 's/[ \|\(核心题材\)]*//g')
+  CONCEPT=$(core_concept $CODE | tr '\r\n' ' ' | sed 's/<[^>]*>/ /g' | sed -r 's/^( |核心题材)*//g')
 
   if [[ $? -eq 0 ]]; then
     echo "$CONCEPT" > $DIR/$CODE.txt
   else
     echo 'not valid stock'
   fi
+
 done
