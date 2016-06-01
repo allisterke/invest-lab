@@ -13,5 +13,5 @@ fi
 
 while read -r LINE; do
   echo "$LINE" | \
-    sed -r 's/^([[:digit:]]{6}[[:space:]]+[^[:space:]]+)/<span style="color:'$COLOR'; font-style:italic; font-weight:bolder; font-size:xx-large; background:'$BG';">\1<\/span>/g'
+    sed -r 's/^([[:digit:]]{6})([[:space:]]+)([^[:space:]]+)/<a href="http:\/\/guba.eastmoney.com\/list,\1.html" target="_blank"><span style="color:'$COLOR'; font-style:italic; font-weight:bolder; font-size:xx-large; background:'$BG';">\1\2\3<\/span><\/a>/g'
 done
