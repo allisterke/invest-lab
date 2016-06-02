@@ -14,7 +14,7 @@ create table TradeInfo (
   volume    double not null,
   amount    double not null,
   primary key (date, code)
-  );
+  ) engine = innodb;
 
 create index TradeInfo_date on TradeInfo (date desc);
 create index TradeInfo_code on TradeInfo (code);

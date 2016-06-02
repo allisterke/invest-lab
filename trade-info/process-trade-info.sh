@@ -21,8 +21,8 @@ cat $FILELIST | while read FILE; do
     CODE=$(echo $TCODE | tr -d -c '[[:digit:]]')
 
     if [[ $CLOSE = '0.0' ]]; then
-      DIFF='-1'
-      DIFFRATE='-1'
+      DIFF='0'
+      DIFFRATE='-100'
     fi
 
     INSERT="insert into TradeInfo values('$DATE', '$CODE', $CLOSE, $TOP, $BOTTOM, \

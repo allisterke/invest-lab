@@ -22,7 +22,6 @@ cat $CONTENT | iconv -f gbk | tr -d '\r\n' | grep -P -o '<tr.*?</tr>' | tail -n 
 	| sed 's/<[^>]*>/,/g' | head -n -1 | awk 'BEGIN { FS=","; OFS=","; }; { print $3, $5; };' \
 	>> $CODELIST
 
-rm -f szse.txt
-ln -s -f $CODELIST szse.txt
+ln -s -f $CODELISt szse.txt
 
 rm -f $CONTENT
