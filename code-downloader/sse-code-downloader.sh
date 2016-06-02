@@ -10,10 +10,11 @@ URL='http://biz.sse.com.cn/sseportal/webapp/datapresent/SSEQueryStockInfoAct?key
 HEADER=$(mktemp header-XXXXXX -t)
 CONTENT=$(mktemp content-XXXXXX -t)
 
-CODELIST=sse-$(date +%F).txt
+mkdir -p code
+CODELIST=code/sse-$(date +%F).txt
 rm -f $CODELIST
 
-ln -s -f $CODELIST sse.txt
+# download code list
 
 while [[ -n $URL ]]; do
 	echo "processing $URL"
@@ -46,4 +47,10 @@ while [[ -n $URL ]]; do
 	fi
 done
 
+# create link
+LINK=../sse.txt
+rm -f $LINK
+ln -s -f $(pwd)/$CODELIST $LINK
+
+# clean up
 rm -f $HEADER $CONTENT
