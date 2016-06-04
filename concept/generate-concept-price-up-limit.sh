@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ./retrieve-price-up-limit.sh |
+  ./decorate-point-one.sh |
   ./decorate-name.sh |
   ./decorate-main-points-li.sh |
   ./decorate-price-up.sh |
