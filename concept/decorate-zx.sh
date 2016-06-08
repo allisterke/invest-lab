@@ -1,6 +1,6 @@
 #!/bin/bash
 
-KEY=转型
+KEY=转型为
 
 while read -r LINE; do
   echo "$LINE" |
