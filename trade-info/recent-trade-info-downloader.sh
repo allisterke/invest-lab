@@ -8,7 +8,7 @@ if [[ -z $START || -z $END ]]; then
   START=$(date -d 'last monday' '+%Y%m%d')
 fi
 
-URL_TEMPLATE="http://quotes.money.163.com/service/chddata.html?code=%s%s&start=$START&end=$END&fields=TCLOSE;HIGH;LOW;TOPEN;LCLOSE;CHG;PCHG;VOTURNOVER;VATURNOVER"
+URL_TEMPLATE="http://quotes.money.163.com/service/chddata.html?code=%s%s&start=$START&end=$END"
 
 generate_url() {
 	case $1 in
@@ -21,17 +21,18 @@ generate_url() {
 	esac
 }
 
-DIR="trade-info-$START-$END"
+DIR="history"
 
 mkdir -p $DIR
 
 INDEX=1
 cat sse.txt szse.txt | while read line; do
+#echo 000518 | while read line; do
 	CODE=$(echo $line | grep -o '[[:digit:]]*')
 	
 	printf '%05d now downloading %s\n' $INDEX $CODE
 
-	curl -s $(generate_url $CODE) | iconv -f gbk | tail -n +2 > $DIR/$CODE.csv
+	curl -s $(generate_url $CODE) | iconv -f gbk | tail -n +2 | tac >> $DIR/$CODE.csv
 
 	INDEX=$((INDEX + 1))
 done

@@ -18,6 +18,7 @@ rm -f $CODELIST
 
 cat $CONTENT | iconv -f gbk | tr -d '\r\n' | grep -P -o '<tr.*?</tr>' | tail -n +2 \
 	| sed 's/<[^>]*>/,/g' | head -n -1 | awk 'BEGIN { FS=","; OFS=","; }; { print $3, $5; };' \
+    | grep -v 'B\|Ｂ' \
 	>> $CODELIST
 
 echo 'szse stock code list downloaded'
