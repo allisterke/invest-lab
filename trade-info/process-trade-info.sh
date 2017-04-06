@@ -3,7 +3,7 @@
 # inputs:
 #   $1 - file name or directory name
 # outputs:
-#   insert into TradeInfo values (...)
+#   insert into $TABLE values (...)
 
 FILELIST=$(mktemp -t trade-info-XXXXXX)
 
@@ -14,20 +14,16 @@ elif [[ -f $1 ]]; then
 fi
 
 IFS=,
+TABLE=invest.history_day
 
 cat $FILELIST | while read FILE; do
   cat $FILE | tr -d '\r' |  while read DATE TCODE NAME CLOSE TOP BOTTOM \
-      OPEN YCLOSE DIFF DIFFRATE VOLUME AMOUNT; do
+      OPEN YCLOSE DIFF DIFFRATE TURNOVER_RATE VOLUME TURNOVER TOTAL CIRCULATION DEALS; do
     CODE=$(echo $TCODE | tr -d -c '[[:digit:]]')
 
-    if [[ $CLOSE = '0.0' ]]; then
-      DIFF='0'
-      DIFFRATE='-100'
-    fi
-
-    INSERT="insert into TradeInfo values('$DATE', '$CODE', $CLOSE, $TOP, $BOTTOM, \
-$OPEN, $YCLOSE, $DIFF, $DIFFRATE, $VOLUME, $AMOUNT);"
-    echo "$INSERT"
+    INSERT="insert into $TABLE values('$DATE', '$CODE', '$NAME', $CLOSE, $TOP, $BOTTOM, \
+$OPEN, $YCLOSE, $DIFF, $DIFFRATE, $TURNOVER_RATE, $VOLUME, $TURNOVER, $TOTAL, $CIRCULATION, $DEALS);"
+    echo "$INSERT" | sed 's/None/null/g'
   done
 done
 
