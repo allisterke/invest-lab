@@ -30,3 +30,5 @@ ln -s -f $(pwd)/$CODELIST $LINK
 
 # clean up
 rm -f $CONTENT
+
+echo 'szse stock code list downloaded'

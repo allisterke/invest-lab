@@ -18,9 +18,9 @@ DIR="history"
 mkdir -p $DIR
 
 INDEX=1
-cat ../sse.txt | while read line; do
-#cat ../sse.txt ../szse.txt | while read line; do
-#echo 000518 | while read line; do
+#cat ../sse.txt | while read line; do
+#cat ../szse.txt | while read line; do
+cat ../sse.txt ../szse.txt | while read line; do
 	CODE=$(echo $line | grep -o '[[:digit:]]*')
 	
 	printf '%05d now downloading %s\n' $INDEX $CODE
