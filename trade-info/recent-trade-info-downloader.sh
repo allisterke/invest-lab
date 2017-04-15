@@ -1,12 +1,12 @@
 #!/bin/bash
 
-START=$1
-END=$2
-
-if [[ -z $START || -z $END ]]; then
-  END=$(date '+%Y%m%d')
-  START=$(date -d 'last monday' '+%Y%m%d')
+START=$(echo 'select max(date) + interval 1 day from invest.history_day' | mysql)
+if [ $? -ne 0 ]; then
+    echo 'cannot get start time from database'
+    exit 1
 fi
+START=$(echo "$START" | tail -n 1 | tr -d '-')
+END=$(date +%F | tr -d '-')
 
 URL_TEMPLATE="http://quotes.money.163.com/service/chddata.html?code=%s%s&start=$START&end=$END"
 
@@ -21,12 +21,16 @@ generate_url() {
 	esac
 }
 
-DIR="history"
+DIR="history-$(date +%F)"
 
-mkdir -p $DIR
+mkdir $DIR
+if [ $? -ne 0 ]; then
+#    echo "$DIR already exists"
+    exit 1
+fi
 
 INDEX=1
-cat sse.txt szse.txt | while read line; do
+cat ../sse.txt ../szse.txt | while read line; do
 #echo 000518 | while read line; do
 	CODE=$(echo $line | grep -o '[[:digit:]]*')
 	

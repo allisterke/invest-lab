@@ -21,6 +21,10 @@ cat $FILELIST | while read FILE; do
       OPEN YCLOSE DIFF DIFFRATE TURNOVER_RATE VOLUME TURNOVER TOTAL CIRCULATION DEALS; do
     CODE=$(echo $TCODE | tr -d -c '[[:digit:]]')
 
+    if [ $CLOSE == '0.0' ]; then
+        continue
+    fi
+
     INSERT="insert into $TABLE values('$DATE', '$CODE', '$NAME', $CLOSE, $TOP, $BOTTOM, \
 $OPEN, $YCLOSE, $DIFF, $DIFFRATE, $TURNOVER_RATE, $VOLUME, $TURNOVER, $TOTAL, $CIRCULATION, $DEALS);"
     echo "$INSERT" | sed 's/None/null/g'
